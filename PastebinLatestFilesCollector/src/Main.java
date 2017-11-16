@@ -120,6 +120,7 @@ public class Main {
 			 throw new ArrayIndexOutOfBoundsException();
 		 
 		 //Charset charset = Charset.forName("US-ASCII");
+		 int counter = 0;
 		 for(int i=0; i<listFileNames.size(); i++) {
 			String str = listFileTexts.get(i); //String to write
 			File file = new File("./files", listFileNames.get(i) +".txt");
@@ -129,6 +130,10 @@ public class Main {
 				} catch (IOException x) {
 					System.err.format("IOException: %s%n", x);
 				}
+			
+			else counter++;
 		 }
+		 System.out.println("\tNumber of files that were already downloaded: " +counter);
+		 System.out.println("\tNumber of files that were created: " +(listFileNames.size()-counter));
 	 }
 }

@@ -14,57 +14,59 @@ public class MainParallel {
 	private final static int NUM_TEXTS = 49;
 	
 	public static void main(String[] args) {
-
-		String sourceCode = null;
-		String[] listFileNames = new String[NUM_TEXTS]; //used fixed length to preserve name of the file.
-		String[] listFileTexts = new String[NUM_TEXTS];
-		long t1,t2, tTotal=0;
-		
-		t1 = System.currentTimeMillis();
-		//Get source code
-		try {
-			sourceCode = getUrlSource("https://pastebin.com/archive");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		t2 = System.currentTimeMillis();
-		System.out.println("Getting the source code of the URL: " +(t2-t1) +"ms");
-		tTotal += t2-t1;
-		
-		t1 = System.currentTimeMillis();
-		//Get list with names
-		listFileNames = extractNames(sourceCode);
-		t2 = System.currentTimeMillis();
-		System.out.println("Getting the list with names: " +(t2-t1) +"ms");
-		tTotal += t2-t1;
-		
-		t1 = System.currentTimeMillis();
-		//Get list with texts
-		try {
-			listFileTexts = extractTexts(listFileNames);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		t2 = System.currentTimeMillis();
-		System.out.println("Getting the list with texts: " +(t2-t1) +"ms");
-		tTotal += t2-t1;
-		
-		t1 = System.currentTimeMillis();
-		//Create .txt files locally
-		try {
-			createFiles(listFileNames, listFileTexts);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		t2 = System.currentTimeMillis();
-		System.out.println("Getting the files locally: " +(t2-t1) +"ms");
-		tTotal += t2-t1;
-		System.out.println("-------------------------------------");
-		System.out.println("Total time spent: " +(tTotal) +"ms");
-		
+		while(true) {
+			String sourceCode = null;
+			String[] listFileNames = new String[NUM_TEXTS]; //used fixed length to preserve name of the file.
+			String[] listFileTexts = new String[NUM_TEXTS];
+			long t1,t2, tTotal=0;
+			
+			t1 = System.currentTimeMillis();
+			//Get source code
+			try {
+				sourceCode = getUrlSource("https://pastebin.com/archive");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			t2 = System.currentTimeMillis();
+			System.out.println("Getting the source code of the URL: " +(t2-t1) +"ms");
+			tTotal += t2-t1;
+			
+			t1 = System.currentTimeMillis();
+			//Get list with names
+			listFileNames = extractNames(sourceCode);
+			t2 = System.currentTimeMillis();
+			System.out.println("Getting the list with names: " +(t2-t1) +"ms");
+			tTotal += t2-t1;
+			
+			t1 = System.currentTimeMillis();
+			//Get list with texts
+			try {
+				listFileTexts = extractTexts(listFileNames);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			t2 = System.currentTimeMillis();
+			System.out.println("Getting the list with texts: " +(t2-t1) +"ms");
+			tTotal += t2-t1;
+			
+			t1 = System.currentTimeMillis();
+			//Create .txt files locally
+			try {
+				createFiles(listFileNames, listFileTexts);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			t2 = System.currentTimeMillis();
+			System.out.println("Getting the files locally: " +(t2-t1) +"ms");
+			tTotal += t2-t1;
+			System.out.println("-------------------------------------");
+			System.out.println("Total time spent: " +(tTotal) +"ms");	
+			System.out.println("-------------------------------------");
+			System.out.println();
+		}//while(true)		
 	}
 	
 	 

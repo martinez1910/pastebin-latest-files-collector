@@ -9,9 +9,19 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * (Single-threaded) Downloads the latest files from Pastebin.com as .txt files continuously.
+ * @author A. Martínez
+ * @version 1.0 21/11/2017
+ */
 public class Main {
 
-	public static void main(String[] args) {
+	/**
+	 * Executes the program continuously.
+	 * @param args
+	 * @throws IOException If an I/O error occurs reading from the file or a malformed or unmappable byte sequence is read.
+	 */
+	public static void main(String[] args) throws IOException {
 		while(true) {
 			String sourceCode = null;
 			List<String> listFileNames, listFileTexts=null;
@@ -20,12 +30,7 @@ public class Main {
 
 			t1 = System.currentTimeMillis();
 			//Get source code
-			try {
-				sourceCode = getUrlSource("https://pastebin.com/archive");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			sourceCode = getUrlSource("https://pastebin.com/archive");
 			t2 = System.currentTimeMillis();
 			System.out.println("Getting the source code of the URL: " +(t2-t1) +"ms");
 			tTotal += t2-t1;
@@ -39,24 +44,14 @@ public class Main {
 
 			t1 = System.currentTimeMillis();
 			//Get list with texts
-			try {
-				listFileTexts = extractTexts(listFileNames);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			listFileTexts = extractTexts(listFileNames);
 			t2 = System.currentTimeMillis();
 			System.out.println("Getting the list with texts: " +(t2-t1) +"ms");
 			tTotal += t2-t1;
 
 			t1 = System.currentTimeMillis();
 			//Create .txt files locally
-			try {
-				createFiles(listFileNames, listFileTexts);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			createFiles(listFileNames, listFileTexts);
 			t2 = System.currentTimeMillis();
 			System.out.println("Getting the files locally: " +(t2-t1) +"ms");
 			tTotal += t2-t1;
@@ -68,13 +63,14 @@ public class Main {
 		
 		
 	}
-	
-	 
-
-	
 
 
-
+	/**
+	 * Returns the source code of a given URL.
+	 * @param url The URL of the web page.
+	 * @return The source code of the URL.
+	 * @throws IOException If an I/O error occurs reading from the file or a malformed or unmappable byte sequence is read.
+	 */
 	private static String getUrlSource(String url) throws IOException {
          URL var = new URL(url);
          URLConnection connection = var.openConnection();
@@ -91,6 +87,11 @@ public class Main {
          return a.toString();
      }
 	 
+	/**
+	 * Returns a list with the files' names given the source code of Pastebin's archive.
+	 * @param htmlSourceCode The source code of the web page with the latest files.
+	 * @return A list with the files' names.
+	 */
 	 private static List<String> extractNames(String htmlSourceCode){
 		 List<String> list = new ArrayList<String>();
 		 String controlString = "class=\"i_p0\" alt=\"\" /><a href=\"/"; //After this string is the name of the files
@@ -103,7 +104,13 @@ public class Main {
 		 }
 		 return list;
 	 }
-	 
+	
+	 /**
+	  * Returns a list with the files' texts given their names.
+	  * @param listFileNames The list with the names of the files.
+	  * @return The list with the text of the files.
+	  * @throws IOException If an I/O error occurs reading from the file or a malformed or unmappable byte sequence is read.
+	  */
 	 private static List<String> extractTexts(List<String> listFileNames) throws IOException {
 
 		 List<String> list = new ArrayList<String>();
@@ -115,17 +122,22 @@ public class Main {
 		 return list;
 	 }
 	 
+	 /**
+	  * Creates .txt files locally given their name and text.
+	  * @param listFileNames The list with the files' names.
+	  * @param listFileTexts The list with the files' texts.
+	  * @throws IOException If an I/O error occurs reading from the file or a malformed or unmappable byte sequence is read.
+	  */
 	 private static void createFiles(List<String> listFileNames, List<String> listFileTexts) throws IOException {
 		 if(listFileNames.size() != listFileTexts.size()) //Just in case
 			 throw new ArrayIndexOutOfBoundsException();
 		 
-		 //Charset charset = Charset.forName("US-ASCII");
 		 int counter = 0;
 		 for(int i=0; i<listFileNames.size(); i++) {
 			String str = listFileTexts.get(i); //String to write
 			File file = new File("./files", listFileNames.get(i) +".txt");
 			if(file.createNewFile())//true created, false already created
-				try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))){//, charset)) {
+				try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))){
 					writer.write(str);
 				} catch (IOException x) {
 					System.err.format("IOException: %s%n", x);

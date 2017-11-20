@@ -17,7 +17,7 @@ public class FindFile {
 	private final static String FILES_RELATIVE_PATH = "./files";
 	private static HashMap<String, Integer> criteria = new HashMap<String, Integer>();
 	private static HashMap<File, List<String>> filesMatchCriteria = new HashMap<File, List<String>>();
-	
+
 	/**
 	 * Executes the program.
 	 * @param args
@@ -25,14 +25,14 @@ public class FindFile {
 	 */
 	public static void main(String[] args) throws IOException {
 		loadCriteria();
-		
+
 		File filesFolder = new File(FILES_RELATIVE_PATH);
 		loadFilesAndCheckCriteria(filesFolder);
-				
+
 		printFiles();
 	}
-	
-	
+
+
 	/**
 	 * Loads the words present in the criteria file.
 	 * @throws IOException If an I/O error occurs reading from the file or a malformed or unmappable byte sequence is read.
@@ -43,7 +43,7 @@ public class FindFile {
 		for(String str : list)
 			criteria.put(str.toLowerCase(), null);
 	}
-	
+
 	/**
 	 * Loads the files in the given folder and invokes checkCriteria() in each of them.
 	 * @param folder The folder where the files are.
@@ -62,7 +62,7 @@ public class FindFile {
 		}
 		System.out.println("Number of files checked: " +folder.listFiles().length);
 	}
-	
+
 	/**
 	 * Extracts a list with the lines of the text that is in the given file.
 	 * @param file The path of the file.
@@ -72,7 +72,7 @@ public class FindFile {
 	private static List<String> readFile(Path file) throws IOException{
 		return Files.readAllLines(file);
 	}
-	
+
 	/**
 	 * Finds the words listed in the criteria file. 
 	 * Compares both words with their lower case version using String toLowerCase().
@@ -88,7 +88,7 @@ public class FindFile {
 						wordsFound.add(word);
 		return wordsFound;
 	}
-	
+
 	/**
 	 * Prints the files that match the criteria and the words found as they are in the file (case-sensitive).
 	 */

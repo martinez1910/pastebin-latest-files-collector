@@ -9,7 +9,7 @@ public class MyThread extends Thread{
 	private int counter;
 	private String name;
 	private String text;
-	
+
 	/**
 	 * Sets the variables used to store
 	 * @param counter
@@ -19,7 +19,7 @@ public class MyThread extends Thread{
 		this.counter = counter;
 		this.name = name;
 	}
-	
+
 	/**
 	 * Executes the thread. It extracts the text from the files.
 	 */
@@ -31,7 +31,7 @@ public class MyThread extends Thread{
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Returns the property 'counter' used to store the file's assigned position in the array.
 	 * @return 'Counter' property

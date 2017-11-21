@@ -42,3 +42,6 @@ This Java project downloads the latest files of Pastebin (from [here](https://ww
           world
           hello
       ```
+
+## Problems
+Pastebin's server will ban your IP temporarily after one minute (approx.) executing the program. The time of detection is lower in the multithreaded version.
